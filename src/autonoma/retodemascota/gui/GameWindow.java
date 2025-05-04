@@ -65,8 +65,15 @@ public class GameWindow extends javax.swing.JFrame {
     }// </editor-fold>//GEN-END:initComponents
 
     private void formMouseMoved(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_formMouseMoved
-        park.setDogPosition(evt.getX(), evt.getY());
-        repaint();
+        if (park != null) {
+            park.setDogPosition(evt.getX(), evt.getY());
+        
+            park.checkForCroquetteEaten();
+        
+            repaint();
+        } else {
+            System.out.println("Park is not initialized.");
+        }
     }//GEN-LAST:event_formMouseMoved
 
     private void formKeyPressed(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_formKeyPressed

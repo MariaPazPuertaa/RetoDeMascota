@@ -46,7 +46,13 @@ public class Dog extends Sprite {
         }
     }
     
-    // Método para actualizar la posición del perro
+    public boolean hit(Croquette croquette) {
+        return this.x < croquette.getX() + croquette.getWidth() &&
+           this.x + this.width > croquette.getX() &&
+           this.y < croquette.getY() + croquette.getHeight() &&
+           this.y + this.height > croquette.getY();
+    }
+    
     public void setPosition(int x, int y) {
         this.x = x;
         this.y = y;

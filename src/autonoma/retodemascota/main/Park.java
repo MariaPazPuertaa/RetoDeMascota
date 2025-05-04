@@ -11,6 +11,9 @@ import java.awt.Color;
 import java.awt.Graphics;
 import java.awt.event.KeyEvent;
 import java.util.ArrayList;
+import javax.sound.sampled.AudioInputStream;
+import javax.sound.sampled.AudioSystem;
+import javax.sound.sampled.Clip;
 
 /**
  *
@@ -54,6 +57,8 @@ public class Park extends Sprite{
                 i --;
                 
                 dog.grow();
+                
+                playEatingSound();  
             }
         }
     }
@@ -78,11 +83,34 @@ public class Park extends Sprite{
             case KeyEvent.VK_A:
                 addCroquette();  
                 checkForCroquetteEaten();
+                playBarkSound();
             break;
         
            
         }
         
+    }
+    
+    private void playEatingSound() {
+        try {
+            AudioInputStream audioIn = AudioSystem.getAudioInputStream(getClass().getResource("/autonoma/RetoDeMascota/sounds/SonidoDeComer2.wav"));
+            Clip clip = AudioSystem.getClip();
+            clip.open(audioIn);
+            clip.start();
+        } catch (Exception e) {
+            e.printStackTrace();  
+        }
+    }
+    
+    private void playBarkSound() {
+        try {
+            AudioInputStream audioIn = AudioSystem.getAudioInputStream(getClass().getResource("/autonoma/RetoDeMascota/sounds/LadridoDePerro.wav"));
+            Clip clip = AudioSystem.getClip();
+            clip.open(audioIn);
+            clip.start();  
+        } catch (Exception e) {
+            e.printStackTrace();  
+        }
     }
     
     public Dog getDog() {
@@ -93,7 +121,6 @@ public class Park extends Sprite{
         this.dog = dog;
     }
     
-    // Actualiza las coordenadas del perro
     public void setDogPosition(int x, int y) {
         if (dog != null) {
             dog.setPosition(x, y);
