@@ -4,8 +4,11 @@
  */
 package autonoma.retodemascota.gui;
 
+import autonoma.retodemascota.elements.Dog;
 import autonoma.retodemascota.main.Park;
 import java.awt.Graphics;
+import java.awt.Image;
+import java.awt.event.KeyEvent;
 
 /**
  *
@@ -20,8 +23,10 @@ public class GameWindow extends javax.swing.JFrame {
      */
     public GameWindow() {
         initComponents();
-        this.setSize(500, 500);
+        this.setSize(800, 800);
         this.setLocationRelativeTo(null);
+        setFocusable(true);
+        this.park = new Park(0, 0, getWidth(), getHeight());
     }
 
     /**
@@ -34,6 +39,16 @@ public class GameWindow extends javax.swing.JFrame {
     private void initComponents() {
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
+        addMouseMotionListener(new java.awt.event.MouseMotionAdapter() {
+            public void mouseMoved(java.awt.event.MouseEvent evt) {
+                formMouseMoved(evt);
+            }
+        });
+        addKeyListener(new java.awt.event.KeyAdapter() {
+            public void keyPressed(java.awt.event.KeyEvent evt) {
+                formKeyPressed(evt);
+            }
+        });
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
@@ -49,6 +64,28 @@ public class GameWindow extends javax.swing.JFrame {
         pack();
     }// </editor-fold>//GEN-END:initComponents
 
+    private void formMouseMoved(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_formMouseMoved
+        park.setDogPosition(evt.getX(), evt.getY());
+        repaint();
+    }//GEN-LAST:event_formMouseMoved
+
+    private void formKeyPressed(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_formKeyPressed
+        switch(evt.getKeyCode())
+        {
+            
+            case KeyEvent.VK_A:
+                park.handleKey(evt);
+                
+            break;
+            
+            case KeyEvent.VK_Q:
+                exitGame();
+            break;
+        }
+        
+        repaint();
+    }//GEN-LAST:event_formKeyPressed
+
     private void exitGame()
     {
         System.exit(0);
@@ -60,9 +97,13 @@ public class GameWindow extends javax.swing.JFrame {
 
     @Override
     public void paint(Graphics g) {
-        super.paint(g); 
-    
-       park.draw(g);
+        Image buffer = createImage(getWidth(), getHeight());
+        Graphics gBuffer = buffer.getGraphics();
+        
+        park.draw(gBuffer);
+
+       
+        g.drawImage(buffer, 0, 0, this);
     }
     /**
      * @param args the command line arguments
