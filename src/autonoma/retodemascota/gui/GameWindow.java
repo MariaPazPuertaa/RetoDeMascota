@@ -5,6 +5,7 @@
 package autonoma.retodemascota.gui;
 
 import autonoma.retodemascota.elements.Dog;
+import autonoma.retodemascota.elements.DogChaseThread;
 import autonoma.retodemascota.main.Park;
 import java.awt.Graphics;
 import java.awt.Image;
@@ -12,7 +13,9 @@ import java.awt.event.KeyEvent;
 
 /**
  *
- * @author Maria Paz Puerta
+ * @author Maria Paz Puerta <mariap.puertaa@autonoma.edu.co>
+ * @since 20252704
+ * @version 1.0.0
  */
 public class GameWindow extends javax.swing.JFrame {
 
@@ -66,7 +69,7 @@ public class GameWindow extends javax.swing.JFrame {
 
     private void formMouseMoved(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_formMouseMoved
         if (park != null) {
-            park.setDogPosition(evt.getX(), evt.getY());
+            park.getDog().setTargetPosition(evt.getX(), evt.getY());
         
             park.checkForCroquetteEaten();
         
@@ -119,6 +122,9 @@ public class GameWindow extends javax.swing.JFrame {
         GameWindow window = new GameWindow();
         
         Park park = new Park(0, 0, window.getWidth(), window.getHeight());
+        
+        DogChaseThread thread = new DogChaseThread(park.getDog(), window);
+        thread.start();
         
         window.setPark(park);
         

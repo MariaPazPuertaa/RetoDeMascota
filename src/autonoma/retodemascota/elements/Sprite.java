@@ -9,15 +9,45 @@ import java.awt.Graphics;
 
 /**
  *
- * @author Maria Paz Puerta
+ * @author Maria Paz Puerta <mariap.puertaa@autonoma.edu.co>
+ * @since 20252704
+ * @version 1.0.0
  */
 public abstract class Sprite {
+    /*
+     * Coordenada horizontal del sprite. 
+     */
     protected int x;
+    
+    /*
+     * Coordenada vertical del sprite. 
+     */
     protected int y;
+    
+    /*
+     * Ancho del sprite. 
+     */
     protected int width;
+    
+    /*
+     * Altura del sprite. 
+     */
     protected int height;
+    
+    /*
+     * Color del sprite (puede ser usado como fondo o borde si no hay imagen). 
+     */
     protected Color color;
 
+    /**
+     * Constructor para inicializar las propiedades básicas de un sprite.
+     * 
+     * @param x coordenada horizontal.
+     * @param y coordenada vertical.
+     * @param width ancho del sprite.
+     * @param height altura del sprite.
+     * @param color color asociado al sprite.
+     */
     public Sprite(int x, int y, int width, int height, Color color) {
         this.x = x;
         this.y = y;
@@ -25,20 +55,30 @@ public abstract class Sprite {
         this.height = height;
         this.color = color;
     }
-    
+
+    /**
+     * Método abstracto para dibujar el sprite.
+     * Cada clase hija debe definir cómo se dibuja.
+     * 
+     * @param g contexto gráfico sobre el que se dibujará el sprite.
+     */
     public abstract void draw(Graphics g);
-    
-    public boolean hit(Sprite other)
-    {
-        if(x < other.getX()+other.getWidth() &&
-           x+width > other.getX() &&
-           y < other.getY()+other.getHeight() &&
-           y+height > other.getY())
-            return true;
-        
-        return false;
+
+    /**
+     * Verifica si este sprite colisiona con otro.
+     * 
+     * @param other otro sprite con el que se quiere verificar colisión.
+     * @return true si hay colisión entre ambos sprites, {@code false} en caso contrario.
+     */
+    public boolean hit(Sprite other) {
+        return x < other.getX() + other.getWidth() &&
+               x + width > other.getX() &&
+               y < other.getY() + other.getHeight() &&
+               y + height > other.getY();
     }
-    
+
+    // Getters y setters
+
     public int getX() {
         return x;
     }
